@@ -1,0 +1,21 @@
+<resources>
+    <string name="app_name">QCM</string>
+
+    <!--window log-->
+    <string name="vallog">Login</string>
+    <string name="valpwd">Mot de passe</string>
+    <string name="valconnection">Connexion</string>
+
+    <!--window welcome-->
+    <string name="valuser">Bienvenue </string>
+    <!--welcome activity-->
+    <string name="url_all_qcm">http://192.168.1.14/app_dev.php/api/all/qcm</string>
+
+    <!--window question-->
+    <string name="valquestion">De quel couleur et le mot "public" dans visualt studio ?</string>
+    <string name="valbtnnext">></string>
+    <string name="valbtnprev"></string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+</resources>
