@@ -16,6 +16,7 @@
     <string name="valbtnnext">></string>
     <string name="valbtnprev"></string>
 
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <!-- feagment question -->
+    <string name="previous">Prec</string>
+    <string name="next">Suiv</string>
 </resources>

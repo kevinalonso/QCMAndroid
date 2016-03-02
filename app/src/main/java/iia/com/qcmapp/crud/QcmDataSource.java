@@ -9,7 +9,7 @@ import android.database.sqlite.SQLiteDatabase;
 import java.util.ArrayList;
 import java.util.List;
 
-import iia.com.qcmapp.data.QcmSQLiteOpenHelper;
+import iia.com.qcmapp.data.AppSQLiteOpenHelper;
 import iia.com.qcmapp.entity.Qcm;
 
 /**
@@ -19,16 +19,16 @@ import iia.com.qcmapp.entity.Qcm;
 public class QcmDataSource {
     // Database fields
     private SQLiteDatabase database;
-    private QcmSQLiteOpenHelper dbHelper;
-    private String[] allColumns = { QcmSQLiteOpenHelper.COLUMN_ID,
-            QcmSQLiteOpenHelper.COLUMN_NAME_QCM,
-            QcmSQLiteOpenHelper.COLUMN_DATE_START,
-            QcmSQLiteOpenHelper.COLUMN_DATE_END,
+    private AppSQLiteOpenHelper dbHelper;
+    private String[] allColumns = { AppSQLiteOpenHelper.COLUMN_ID,
+            AppSQLiteOpenHelper.COLUMN_NAME_QCM,
+            AppSQLiteOpenHelper.COLUMN_DATE_START,
+            AppSQLiteOpenHelper.COLUMN_DATE_END,
             //QcmSQLiteOpenHelper.COLUMN_IS_ACTIVE,
-            QcmSQLiteOpenHelper.COLUMN_ID_TYPE};
+            AppSQLiteOpenHelper.COLUMN_ID_TYPE};
 
     public QcmDataSource(Context context) {
-        dbHelper = new QcmSQLiteOpenHelper(context);
+        dbHelper = new AppSQLiteOpenHelper(context);
     }
 
     public void open() throws SQLException {
@@ -49,16 +49,16 @@ public class QcmDataSource {
         }
         else {
             ContentValues values = new ContentValues();
-            values.put(QcmSQLiteOpenHelper.COLUMN_NAME_QCM, nameQcm);
-            values.put(QcmSQLiteOpenHelper.COLUMN_DATE_START, dateStart);
-            values.put(QcmSQLiteOpenHelper.COLUMN_DATE_END, dateEnd);
-            values.put(QcmSQLiteOpenHelper.COLUMN_IS_ACTIVE, isActive);
-            values.put(QcmSQLiteOpenHelper.COLUMN_ID_TYPE, idType);
+            values.put(AppSQLiteOpenHelper.COLUMN_NAME_QCM, nameQcm);
+            values.put(AppSQLiteOpenHelper.COLUMN_DATE_START, dateStart);
+            values.put(AppSQLiteOpenHelper.COLUMN_DATE_END, dateEnd);
+            values.put(AppSQLiteOpenHelper.COLUMN_IS_ACTIVE, isActive);
+            values.put(AppSQLiteOpenHelper.COLUMN_ID_TYPE, idType);
 
-            long insertId = database.insert(QcmSQLiteOpenHelper.TABLE_QCM, null,
+            long insertId = database.insert(AppSQLiteOpenHelper.TABLE_QCM, null,
                     values);
-            Cursor cursor = database.query(QcmSQLiteOpenHelper.TABLE_QCM,
-                    allColumns, QcmSQLiteOpenHelper.COLUMN_ID + " = " + insertId, null,
+            Cursor cursor = database.query(AppSQLiteOpenHelper.TABLE_QCM,
+                    allColumns, AppSQLiteOpenHelper.COLUMN_ID + " = " + insertId, null,
                     null, null, null);
             cursor.moveToFirst();
             Qcm newQcm = cursorToQcm(cursor);
@@ -70,13 +70,13 @@ public class QcmDataSource {
     public Qcm updateQcm(long id, Qcm qcm){
         ContentValues values = new ContentValues();
 
-        values.put(QcmSQLiteOpenHelper.COLUMN_NAME_QCM, qcm.getNameQcm());
-        values.put(QcmSQLiteOpenHelper.COLUMN_DATE_START, qcm.getDateStart());
-        values.put(QcmSQLiteOpenHelper.COLUMN_DATE_END, qcm.getDateEnd());
-        values.put(QcmSQLiteOpenHelper.COLUMN_IS_ACTIVE, qcm.getIsActive());
-        values.put(QcmSQLiteOpenHelper.COLUMN_ID_TYPE, qcm.getId_type());
+        values.put(AppSQLiteOpenHelper.COLUMN_NAME_QCM, qcm.getNameQcm());
+        values.put(AppSQLiteOpenHelper.COLUMN_DATE_START, qcm.getDateStart());
+        values.put(AppSQLiteOpenHelper.COLUMN_DATE_END, qcm.getDateEnd());
+        values.put(AppSQLiteOpenHelper.COLUMN_IS_ACTIVE, qcm.getIsActive());
+        values.put(AppSQLiteOpenHelper.COLUMN_ID_TYPE, qcm.getId_type());
 
-        database.update(QcmSQLiteOpenHelper.TABLE_QCM, values, QcmSQLiteOpenHelper.COLUMN_ID + " = " + qcm.getId(), null);
+        database.update(AppSQLiteOpenHelper.TABLE_QCM, values, AppSQLiteOpenHelper.COLUMN_ID + " = " + qcm.getId(), null);
 
         return getQcmWithId(qcm.getId());
     }
@@ -84,14 +84,14 @@ public class QcmDataSource {
     public void deleteQcm(Qcm qcm) {
         long id = qcm.getId();
         System.out.println("Contact deleted with id: " + id);
-        database.delete(QcmSQLiteOpenHelper.TABLE_QCM, QcmSQLiteOpenHelper.COLUMN_ID
+        database.delete(AppSQLiteOpenHelper.TABLE_QCM, AppSQLiteOpenHelper.COLUMN_ID
                 + " = " + id, null);
     }
 
     public List<Qcm> getAllQcm() {
         List<Qcm> contacts = new ArrayList<Qcm>();
 
-        Cursor cursor = database.query(QcmSQLiteOpenHelper.TABLE_QCM,
+        Cursor cursor = database.query(AppSQLiteOpenHelper.TABLE_QCM,
                 allColumns, null, null, null, null, null);
 
         cursor.moveToFirst();
@@ -106,7 +106,7 @@ public class QcmDataSource {
     }
 
     public Qcm getQcmWithId(Long id){
-        Cursor c = database.query(QcmSQLiteOpenHelper.TABLE_QCM, allColumns, QcmSQLiteOpenHelper.COLUMN_ID + " = \"" + id +"\"", null, null, null, null);
+        Cursor c = database.query(AppSQLiteOpenHelper.TABLE_QCM, allColumns, AppSQLiteOpenHelper.COLUMN_ID + " = \"" + id +"\"", null, null, null, null);
         c.moveToFirst();
         Qcm contact = cursorToQcm(c);
         c.close();
@@ -114,7 +114,7 @@ public class QcmDataSource {
     }
 
     public Boolean existQcmWithId(Long id){
-        Cursor c = database.query(QcmSQLiteOpenHelper.TABLE_QCM, allColumns, QcmSQLiteOpenHelper.COLUMN_ID + " = \"" + id +"\"", null, null, null, null);
+        Cursor c = database.query(AppSQLiteOpenHelper.TABLE_QCM, allColumns, AppSQLiteOpenHelper.COLUMN_ID + " = \"" + id +"\"", null, null, null, null);
         if(c.getCount()>0){
             c.close();
             return true;
