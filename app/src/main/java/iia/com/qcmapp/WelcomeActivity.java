@@ -12,6 +12,7 @@ import java.util.List;
 
 import iia.com.qcmapp.adapter.QcmListAdapter;
 import iia.com.qcmapp.backtask.BackTask;
+import iia.com.qcmapp.backtask.GoodnswerBackTask;
 import iia.com.qcmapp.backtask.QuestionBackTask;
 import iia.com.qcmapp.crud.QcmDataSource;
 import iia.com.qcmapp.entity.Qcm;
@@ -34,18 +35,14 @@ public class WelcomeActivity extends Activity {
         QuestionBackTask questionBackTask = new QuestionBackTask(this);
         questionBackTask.execute();
 
+        GoodnswerBackTask goodnswerBackTask = new GoodnswerBackTask(this);
+        goodnswerBackTask.execute();
+
         //refreshList();
     }
 
     public void refreshList(){
         List<Qcm> qcmList = recupQcm();
-
-        /*ArrayAdapter<Qcm> adapter = new ArrayAdapter<Qcm>(this,
-                android.R.layout.activity_list_item, qcmList);*/
-
-
-        /*ArrayAdapter adapter = new ArrayAdapter(this,
-                R.layout.row_list_qcm, R.id.txtVNameQcm, qcmList);*/
 
         lv.setAdapter(new QcmListAdapter(this, R.layout.row_list_qcm, qcmList));
 

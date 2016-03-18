@@ -1,22 +1,25 @@
 <resources>
-    <string name="app_name">QCM</string>
 
-    <!--window log-->
+    <!-- Name Application-->
+    <string name="app_name">QCM</string>
+    <!--Name Application-->
+
+    <!--activity log-->
     <string name="vallog">Login</string>
     <string name="valpwd">Mot de passe</string>
     <string name="valconnection">Connexion</string>
+    <!--activity log-->
 
-    <!--window welcome-->
+    <!--activity welcome-->
     <string name="valuser">Bienvenue </string>
     <!--welcome activity-->
-    <string name="url_all_qcm">http://192.168.1.14/app_dev.php/api/all/qcm</string>
 
-    <!--window question-->
+    <!--activity question-->
     <string name="valquestion">De quel couleur et le mot "public" dans visualt studio ?</string>
     <string name="valbtnnext">></string>
     <string name="valbtnprev"></string>
 
-    <!-- feagment question -->
+    <!-- fragment question -->
     <string name="previous">Prec</string>
     <string name="next">Suiv</string>
 </resources>

@@ -31,6 +31,10 @@ import iia.com.qcmapp.entity.Question;
  */
 public class QuestionBackTask extends AsyncTask<Void, Integer, Void> {
 
+    private Context context;
+
+    private static final String URL_QUESTION = "http://192.168.1.14/app_dev.php/api/all/question";
+
     private static final String TAG_QUESTION = "questions";
     private static final String TAG_ID = "idQuestion";
     private static final String TAG_TEXTQUESTION = "textQuestion";
@@ -38,10 +42,10 @@ public class QuestionBackTask extends AsyncTask<Void, Integer, Void> {
 
     static JSONObject jObj = null;
 
-    public String readQuestionFeed() {
+    public String readQuestion() {
         StringBuilder builder = new StringBuilder();
         HttpClient client = new DefaultHttpClient();
-        HttpGet httpGet = new HttpGet("http://192.168.1.14/app_dev.php/api/all/question");
+        HttpGet httpGet = new HttpGet(URL_QUESTION);
         try {
             HttpResponse response = client.execute(httpGet);
             StatusLine statusLine = response.getStatusLine();
@@ -65,7 +69,6 @@ public class QuestionBackTask extends AsyncTask<Void, Integer, Void> {
         return builder.toString();
     }
 
-    Context context;
     public QuestionBackTask(Context context) {
         this.context = context;
     }
@@ -78,7 +81,7 @@ public class QuestionBackTask extends AsyncTask<Void, Integer, Void> {
 
     @Override
     protected Void doInBackground(Void... params) {
-        String textQuestion = readQuestionFeed();
+        String textQuestion = readQuestion();
         JSONObject jsonQuestion = parseQuestion(textQuestion);
         Boolean result  = recQuestion(jsonQuestion);
         return null;

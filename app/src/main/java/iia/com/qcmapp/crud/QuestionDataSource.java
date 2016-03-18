@@ -18,7 +18,6 @@ import iia.com.qcmapp.entity.Question;
 public class QuestionDataSource {
     private SQLiteDatabase database;
     private AppSQLiteOpenHelper dbHelper;
-    //QuestionSQLiteOpenHelper
     private String[] allColumns = { AppSQLiteOpenHelper.COLUMN_ID_QUESTION,
             AppSQLiteOpenHelper.COLUMN_NAME_QUESTION,
             AppSQLiteOpenHelper.COLUMN_ID_TYPE,

@@ -23,31 +23,29 @@ import java.io.InputStreamReader;
 
 import iia.com.qcmapp.MainActivity;
 import iia.com.qcmapp.WelcomeActivity;
-import iia.com.qcmapp.crud.QcmDataSource;
-import iia.com.qcmapp.entity.Qcm;
+import iia.com.qcmapp.crud.GoodAnswerDataSource;
+import iia.com.qcmapp.entity.GoodAnswer;
 
 /**
- * Created by kevin-pc on 31/01/2016.
+ * Created by kevin-pc on 06/03/2016.
  */
-public class BackTask extends AsyncTask<Void, Integer, Void> {
+public class GoodnswerBackTask extends AsyncTask<Void, Integer, Void> {
 
     private Context context;
 
-    private static final String URL_QCM = "url_all_qcm\">http://192.168.1.14/app_dev.php/api/all/qcm";
+    private static final String URL_GOODANSWER = "http://192.168.1.14/app_dev.php/api/all/good/answer";
 
-    private static final String TAG_QCM = "qcm";
+    private static final String TAG_GOODANSWER = "goodAnswers";
     private static final String TAG_ID = "id";
-    private static final String TAG_NAMEQCM = "nameQcm";
-    private static final String TAG_DATESTART = "dateStart";
-    private static final String TAG_DATEEND = "dateEnd";
-    private static final String TAG_ISACTIVE = "isActive";
+    private static final String TAG_TEXTANSWER = "answerQuestion";
+    private static final String TAG_IDQUESTION = "idQuestion";
 
     static JSONObject jObj = null;
 
-    public String readQcm() {
+    public String readGoodAnswer() {
         StringBuilder builder = new StringBuilder();
         HttpClient client = new DefaultHttpClient();
-        HttpGet httpGet = new HttpGet(URL_QCM);
+        HttpGet httpGet = new HttpGet(URL_GOODANSWER);
         try {
             HttpResponse response = client.execute(httpGet);
             StatusLine statusLine = response.getStatusLine();
@@ -61,7 +59,6 @@ public class BackTask extends AsyncTask<Void, Integer, Void> {
                     builder.append(line + "\n");
                 }
             } else {
-                // TODO Foreach in database
                 Log.e(MainActivity.class.toString(), "Failed to download file");
             }
         } catch (ClientProtocolException e) {
@@ -72,8 +69,7 @@ public class BackTask extends AsyncTask<Void, Integer, Void> {
         return builder.toString();
     }
 
-    public BackTask(Context context) {
-
+    public GoodnswerBackTask(Context context) {
         this.context = context;
     }
 
@@ -85,9 +81,9 @@ public class BackTask extends AsyncTask<Void, Integer, Void> {
 
     @Override
     protected Void doInBackground(Void... params) {
-        String textQcm = readQcm();
-        JSONObject jsonQcm = parseQcm(textQcm);
-        Boolean result  = recContact(jsonQcm);
+        String textGodAnswer = readGoodAnswer();
+        JSONObject jsonGoodAnswer = parseGoodAnswer(textGodAnswer);
+        Boolean result  = recGoodAnswer(jsonGoodAnswer);
         return null;
     }
 
@@ -102,33 +98,31 @@ public class BackTask extends AsyncTask<Void, Integer, Void> {
 
     }
 
-    public JSONObject parseQcm(String qcm){
+    public JSONObject parseGoodAnswer(String textAnswer){
         try {
-            jObj = new JSONObject(qcm);
+            jObj = new JSONObject(textAnswer);
         } catch (JSONException e) {
             Log.e("JSON Parser", "Error parsing data " + e.toString());
         }
         return jObj;
     }
 
-    public Boolean recContact(JSONObject jsonContact) {
-        QcmDataSource datasource = new QcmDataSource(context);
+    public Boolean recGoodAnswer(JSONObject jsonGoodAnswer) {
+        GoodAnswerDataSource datasource = new GoodAnswerDataSource(context);
         datasource.open();
 
         try {
-            JSONArray qcmJson = jsonContact.getJSONArray(TAG_QCM);
+            JSONArray goodAnswerJson = jsonGoodAnswer.getJSONArray(TAG_GOODANSWER);
 
-            for(int i = 0; i < qcmJson.length(); i++){
-                Qcm qcm = null;
-                JSONObject c = qcmJson.getJSONObject(i);
+            for (int i = 0; i < goodAnswerJson.length(); i++) {
+                GoodAnswer goodAnswer = null;
+                JSONObject c = goodAnswerJson.getJSONObject(i);
 
                 Long id = c.getLong(TAG_ID);
-                String nameQcm = c.getString(TAG_NAMEQCM);
-                String DateStart = c.getString(TAG_DATESTART);
-                String DateEnd = c.getString(TAG_DATEEND);
-                //boolean isActive = c.getString(TAG_ISACTIVE).equals("true");
+                String textGoodAnswer = c.getString(TAG_TEXTANSWER);
+                Long idQuestion = c.getLong(TAG_IDQUESTION);
 
-                qcm = datasource.createQcm(nameQcm,DateStart,DateEnd,true,0,id);
+                goodAnswer = datasource.createGoodAnwser(textGoodAnswer,id,idQuestion);
             }
             datasource.close();
             return true;
@@ -138,7 +132,6 @@ public class BackTask extends AsyncTask<Void, Integer, Void> {
             datasource.close();
             return false;
         }
-
     }
-}
 
+}

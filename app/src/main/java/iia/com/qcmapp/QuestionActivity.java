@@ -21,6 +21,7 @@ public class QuestionActivity extends AppCompatActivity implements QuestionFragm
             @Override
             public void onClick(View v) {
 
+
                 FragmentManager fragmentManager = getFragmentManager();
                 FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
 
@@ -29,10 +30,8 @@ public class QuestionActivity extends AppCompatActivity implements QuestionFragm
                 questionFragment.POINTOR_I = i;
                 fragmentTransaction.replace(R.id.frgmentQuestion,questionFragment);
                 fragmentTransaction.commit();
-
             }
         });
-
     }
 
     @Override

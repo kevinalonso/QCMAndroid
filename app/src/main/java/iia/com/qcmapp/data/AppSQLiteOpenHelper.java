@@ -40,14 +40,11 @@ public class AppSQLiteOpenHelper extends SQLiteOpenHelper {
 
     //region TABLE QUESTION
     public static final String TABLE_QUESTION = "question";
-    //public static final String TABLE_QCM = "qcms";
     public static final String COLUMN_ID_QUESTION = "_id";
     public static final String COLUMN_NAME_QUESTION = "TextQuestion";
     public static final String COLUMN_ID_TYPE_QUESTION = "_id_Type";
     public static final String COLUMN_ID_QCM = "_id_Qcm";
 
-    //private static final String DATABASE_NAME = "qcms.db";
-    //private static final int DATABASE_VERSION = 1;
 
     private static final String DATABASE_CREATE_QUESTION = "CREATE TABLE " + TABLE_QUESTION + " (" + COLUMN_ID_QUESTION + " INTEGER PRIMARY KEY AUTOINCREMENT,"
             + COLUMN_NAME_QUESTION + " TEXT NOT NULL,"
@@ -55,6 +52,20 @@ public class AppSQLiteOpenHelper extends SQLiteOpenHelper {
             + COLUMN_ID_QCM + " INTEGER, "
             + " FOREIGN KEY("+COLUMN_ID_QCM + ") REFERENCES "
             + TABLE_QCM + "(_id) "+")";
+    //endregion
+
+    //region TABLE GOODANSWER
+    public static final String TABLE_ANSWER = "good_answer";
+    public static final String COLUMN_ID_ANSWER = "_id";
+    public static final String COLUMN_NAME_ANSWER = "AnswerQuestion";
+    public static final String COLUMN_ID_QUESTION_FK = "_id_Question";
+
+
+    private static final String DATABASE_CREATE_ANSWER = "CREATE TABLE " + TABLE_ANSWER + " (" + COLUMN_ID_ANSWER + " INTEGER PRIMARY KEY AUTOINCREMENT,"
+            + COLUMN_NAME_ANSWER + " TEXT NOT NULL,"
+            + COLUMN_ID_QUESTION_FK + " INTEGER, "
+            + " FOREIGN KEY("+COLUMN_ID_QUESTION_FK + ") REFERENCES "
+            + TABLE_QUESTION + "(_id) "+")";
     //endregion
 
     public AppSQLiteOpenHelper(Context context) {
@@ -65,6 +76,7 @@ public class AppSQLiteOpenHelper extends SQLiteOpenHelper {
     public void onCreate(SQLiteDatabase database) {
         database.execSQL(DATABASE_CREATE);
         database.execSQL(DATABASE_CREATE_QUESTION);
+        database.execSQL(DATABASE_CREATE_ANSWER);
     }
 
     @Override
@@ -74,6 +86,7 @@ public class AppSQLiteOpenHelper extends SQLiteOpenHelper {
                         + newVersion + ", which will destroy all old data");
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_QCM);
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_QUESTION);
+        db.execSQL("DROP TABLE IF EXISTS " + TABLE_ANSWER);
         onCreate(db);
     }
 
