@@ -22,7 +22,6 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 
 import iia.com.qcmapp.MainActivity;
-import iia.com.qcmapp.WelcomeActivity;
 import iia.com.qcmapp.crud.QuestionDataSource;
 import iia.com.qcmapp.entity.Question;
 
@@ -33,7 +32,7 @@ public class QuestionBackTask extends AsyncTask<Void, Integer, Void> {
 
     private Context context;
 
-    private static final String URL_QUESTION = "http://192.168.1.14/app_dev.php/api/all/question";
+    private static final String URL_QUESTION = "http://192.168.216.12/app_dev.php/api/all/question";
 
     private static final String TAG_QUESTION = "questions";
     private static final String TAG_ID = "idQuestion";
@@ -93,7 +92,7 @@ public class QuestionBackTask extends AsyncTask<Void, Integer, Void> {
 
     @Override
     protected void onPostExecute(Void result) {
-        ((WelcomeActivity) context).refreshList();
+        //((WelcomeActivity) context).refreshList();
         Toast.makeText(context, "Le traitement asynchrone est terminé", Toast.LENGTH_SHORT).show();
 
     }

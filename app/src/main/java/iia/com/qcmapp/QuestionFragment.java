@@ -8,12 +8,14 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CheckBox;
 import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import iia.com.qcmapp.constants.Constants;
+import iia.com.qcmapp.crud.GoodAnswerDataSource;
 import iia.com.qcmapp.crud.QuestionDataSource;
 import iia.com.qcmapp.entity.Question;
 
@@ -86,6 +88,8 @@ public class QuestionFragment extends Fragment {
 
         //Variable
         TextView questionTextView = (TextView)v.findViewById(R.id.textViewQuestion);
+        CheckBox answerText = (CheckBox)v.findViewById(R.id.chkAnswer2);
+
         Intent intent = getActivity().getIntent();
         long resIntent = intent.getLongExtra("id", ID_QCM_FROM_LIST);
 
@@ -93,12 +97,17 @@ public class QuestionFragment extends Fragment {
         List<Question> questionList = new ArrayList<Question>();
         questionDataSource.open();
 
+        GoodAnswerDataSource goodAnswerDataSource = new GoodAnswerDataSource(getActivity());
+
         questionList = questionDataSource.getQuestionWithIdList(resIntent);
         if(POINTOR_I == questionList.size()){
             questionTextView.setText("");
             questionTextView.setText(Constants.END_QCM);
         }else {
             questionTextView.setText(questionList.get(POINTOR_I).getTextQuestion());
+            long idQuestion = questionList.get(POINTOR_I).getId();
+            answerText.setText(goodAnswerDataSource.getGoodAnswerWithId(idQuestion).getAnswerQuestion());
+
         }
 
         return  v;

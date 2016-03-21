@@ -33,7 +33,7 @@ public class BackTask extends AsyncTask<Void, Integer, Void> {
 
     private Context context;
 
-    private static final String URL_QCM = "url_all_qcm\">http://192.168.1.14/app_dev.php/api/all/qcm";
+    private static final String URL_QCM = "http://192.168.216.12/app_dev.php/api/all/qcm";
 
     private static final String TAG_QCM = "qcm";
     private static final String TAG_ID = "id";

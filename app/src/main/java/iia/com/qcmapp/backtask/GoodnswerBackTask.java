@@ -22,7 +22,6 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 
 import iia.com.qcmapp.MainActivity;
-import iia.com.qcmapp.WelcomeActivity;
 import iia.com.qcmapp.crud.GoodAnswerDataSource;
 import iia.com.qcmapp.entity.GoodAnswer;
 
@@ -33,7 +32,7 @@ public class GoodnswerBackTask extends AsyncTask<Void, Integer, Void> {
 
     private Context context;
 
-    private static final String URL_GOODANSWER = "http://192.168.1.14/app_dev.php/api/all/good/answer";
+    private static final String URL_GOODANSWER = "http://192.168.216.12/app_dev.php/api/all/good/answer";
 
     private static final String TAG_GOODANSWER = "goodAnswers";
     private static final String TAG_ID = "id";
@@ -93,7 +92,7 @@ public class GoodnswerBackTask extends AsyncTask<Void, Integer, Void> {
 
     @Override
     protected void onPostExecute(Void result) {
-        ((WelcomeActivity) context).refreshList();
+        //((WelcomeActivity) context).refreshList();
         Toast.makeText(context, "Le traitement asynchrone est terminé", Toast.LENGTH_SHORT).show();
 
     }

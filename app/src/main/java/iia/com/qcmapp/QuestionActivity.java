@@ -16,7 +16,7 @@ public class QuestionActivity extends AppCompatActivity implements QuestionFragm
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_question);
 
-        Button btnNext = (Button)findViewById(R.id.buttonPrev);
+        Button btnNext = (Button)findViewById(R.id.buttonNext);
         btnNext.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

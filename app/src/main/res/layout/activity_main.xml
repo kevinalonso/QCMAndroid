@@ -4,61 +4,83 @@
     android:layout_height="match_parent" android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    android:paddingBottom="@dimen/activity_vertical_margin" tools:context=".MainActivity">
+    android:paddingBottom="@dimen/activity_vertical_margin" tools:context=".MainActivity"
+    android:background="@android:color/black">
 
     <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:id="@+id/logpwd">
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceLarge"
-            android:text="@string/vallog"
-            android:id="@+id/txtlogin"
-            android:layout_alignParentStart="true" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceLarge"
-            android:text="@string/valpwd"
-            android:id="@+id/txtpwd"
-            android:layout_marginTop="50dp"
-            android:layout_alignParentStart="true" />
-
-    </LinearLayout>
-
-    <LinearLayout android:layout_toRightOf="@+id/logpwd"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/linearLayout2"
-        android:orientation="vertical">
+        android:background="@android:color/black"
+        android:id="@+id/linearLayout">
 
-        <EditText
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:id="@+id/logpwd">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@android:color/white"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:text="@string/vallog"
+                android:id="@+id/txtlogin"
+                android:layout_alignParentStart="true" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@android:color/white"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:text="@string/valpwd"
+                android:id="@+id/txtpwd"
+                android:layout_marginTop="50dp"
+                android:layout_alignParentStart="true" />
+
+        </LinearLayout>
+
+        <LinearLayout android:layout_toRightOf="@+id/logpwd"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/edtlogin"/>
+            android:id="@+id/linearLayout2"
+            android:orientation="vertical">
 
+            <EditText
+                android:layout_width="200dp"
+                android:layout_marginLeft="20dp"
+                android:layout_height="wrap_content"
+                android:background="@android:color/white"
+                android:id="@+id/edtlogin"/>
+
+            <EditText
+                android:layout_height="wrap_content"
+                android:layout_width="200dp"
+                android:layout_marginLeft="20dp"
+                android:background="@android:color/white"
+                android:id="@+id/edtpwd"
+                android:layout_alignBottom="@+id/linearLayout"
+                android:layout_marginTop="57dp"
+                android:layout_alignParentEnd="true" />
+
+
+        </LinearLayout>
 
     </LinearLayout>
 
-
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/valconnection"
-        android:id="@+id/btnconnction"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentEnd="true" />
-
-    <EditText
-        android:layout_height="wrap_content"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:id="@+id/edtpwd"
-        android:layout_alignBottom="@+id/logpwd"
-        android:layout_alignStart="@+id/linearLayout2" />
+        android:layout_height="5dp"
+        android:layout_marginTop="250dp"
+        android:background="@android:color/darker_gray"></LinearLayout>
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/valconnection"
+            android:id="@+id/btnconnction"
+            android:background="@android:color/holo_green_dark"
+            android:textColor="@android:color/white"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentEnd="true" />
 </RelativeLayout>
