@@ -17,9 +17,11 @@ import iia.com.qcmapp.entity.Qcm;
  */
 
 public class QcmDataSource {
+
     // Database fields
     private SQLiteDatabase database;
     private AppSQLiteOpenHelper dbHelper;
+
     private String[] allColumns = { AppSQLiteOpenHelper.COLUMN_ID,
             AppSQLiteOpenHelper.COLUMN_NAME_QCM,
             AppSQLiteOpenHelper.COLUMN_DATE_START,

@@ -15,8 +15,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 import iia.com.qcmapp.constants.Constants;
+import iia.com.qcmapp.crud.BadAnswerDataSource;
 import iia.com.qcmapp.crud.GoodAnswerDataSource;
 import iia.com.qcmapp.crud.QuestionDataSource;
+import iia.com.qcmapp.entity.BadAnswer;
 import iia.com.qcmapp.entity.Question;
 
 
@@ -38,6 +40,11 @@ public class QuestionFragment extends Fragment {
      * Id from list (this id from qcm selected and is use to get the mapped question.
      */
     public static long ID_QCM_FROM_LIST;
+
+    /**
+     * Get the number of tap to the button Next
+     * It is using to get index in List of questions
+     */
     public static int POINTOR_I;
 
     // TODO: Rename and change types of parameters
@@ -57,11 +64,13 @@ public class QuestionFragment extends Fragment {
      */
     // TODO: Rename and change types and number of parameters
     public static QuestionFragment newInstance(long idQcm, String param1,String param2) {
+
         QuestionFragment fragment = new QuestionFragment();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
         args.putLong(String.valueOf(ID_QCM_FROM_LIST), idQcm);
+
         fragment.setArguments(args);
         return fragment;
     }
@@ -89,27 +98,54 @@ public class QuestionFragment extends Fragment {
         //Variable
         TextView questionTextView = (TextView)v.findViewById(R.id.textViewQuestion);
         CheckBox answerText = (CheckBox)v.findViewById(R.id.chkAnswer2);
+        CheckBox badAnswerOne = (CheckBox)v.findViewById(R.id.chkAnswer1);
+        CheckBox badAnswerTwo = (CheckBox)v.findViewById(R.id.chkAnswer3);
 
         Intent intent = getActivity().getIntent();
         long resIntent = intent.getLongExtra("id", ID_QCM_FROM_LIST);
 
         QuestionDataSource questionDataSource = new QuestionDataSource(getActivity());
-        List<Question> questionList = new ArrayList<Question>();
+        GoodAnswerDataSource goodAnswerDataSource = new GoodAnswerDataSource(getActivity());
+        BadAnswerDataSource badAnswerDataSource = new BadAnswerDataSource(getActivity());
+
+        //Very important always open connection database to execute query
         questionDataSource.open();
 
-        GoodAnswerDataSource goodAnswerDataSource = new GoodAnswerDataSource(getActivity());
+        List<Question> questionList = new ArrayList<Question>();
 
         questionList = questionDataSource.getQuestionWithIdList(resIntent);
+
+        //Insert element in random order in my list
+        //Collections.shuffle(questionList);
+
+        //Very important always open connection database to execute query
+        goodAnswerDataSource.open();
+        badAnswerDataSource.open();
+
         if(POINTOR_I == questionList.size()){
             questionTextView.setText("");
             questionTextView.setText(Constants.END_QCM);
+            //TODO Post list of result answer
         }else {
             questionTextView.setText(questionList.get(POINTOR_I).getTextQuestion());
             long idQuestion = questionList.get(POINTOR_I).getId();
             answerText.setText(goodAnswerDataSource.getGoodAnswerWithId(idQuestion).getAnswerQuestion());
 
-        }
+            List<BadAnswer> badAnswerlist = new ArrayList<BadAnswer>();
+            badAnswerlist = badAnswerDataSource.getBadAnswerWithIdList(idQuestion);
 
+           for(int index = 0; index <badAnswerlist.size(); index++)
+           {
+               badAnswerOne.setText(badAnswerlist.get(0).getBadAnswerQuestion());
+               badAnswerTwo.setText(badAnswerlist.get(1).getBadAnswerQuestion());
+               index++;
+           }
+            //badAnswerTwo.setText(badAnswerDataSource.getBadAnswerWithId(idQuestion).getBadAnswerQuestion());
+           //Close connection databases after execute query
+            badAnswerDataSource.close();
+            goodAnswerDataSource.close();
+
+        }
         return  v;
     }
 

@@ -68,6 +68,20 @@ public class AppSQLiteOpenHelper extends SQLiteOpenHelper {
             + TABLE_QUESTION + "(_id) "+")";
     //endregion
 
+    //region TABLE BADANSWER
+    public static final String TABLE_BAD_ANSWER = "bad_answer";
+    public static final String COLUMN_ID_BAD_ANSWER = "_id";
+    public static final String COLUMN_NAME_BAD_ANSWER = "BadAnswerQuestion";
+    public static final String COLUMN_BAD_ID_QUESTION_FK = "_id_Question";
+
+
+    private static final String DATABASE_CREATE_BAD_ANSWER = "CREATE TABLE " + TABLE_BAD_ANSWER + " (" + COLUMN_ID_BAD_ANSWER + " INTEGER PRIMARY KEY AUTOINCREMENT,"
+            + COLUMN_NAME_BAD_ANSWER + " TEXT NOT NULL,"
+            + COLUMN_BAD_ID_QUESTION_FK + " INTEGER, "
+            + " FOREIGN KEY("+COLUMN_BAD_ID_QUESTION_FK + ") REFERENCES "
+            + TABLE_QUESTION + "(_id) "+")";
+    //endregion
+
     public AppSQLiteOpenHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
     }
@@ -77,6 +91,7 @@ public class AppSQLiteOpenHelper extends SQLiteOpenHelper {
         database.execSQL(DATABASE_CREATE);
         database.execSQL(DATABASE_CREATE_QUESTION);
         database.execSQL(DATABASE_CREATE_ANSWER);
+        database.execSQL(DATABASE_CREATE_BAD_ANSWER);
     }
 
     @Override
@@ -87,6 +102,7 @@ public class AppSQLiteOpenHelper extends SQLiteOpenHelper {
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_QCM);
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_QUESTION);
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_ANSWER);
+        db.execSQL("DROP TABLE IF EXISTS " + TABLE_BAD_ANSWER);
         onCreate(db);
     }
 

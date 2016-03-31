@@ -2,29 +2,19 @@ package iia.com.qcmapp.backtask;
 
 import android.content.Context;
 import android.os.AsyncTask;
-import android.util.Log;
 import android.widget.Toast;
 
-import org.apache.http.HttpEntity;
-import org.apache.http.HttpResponse;
-import org.apache.http.StatusLine;
-import org.apache.http.client.ClientProtocolException;
-import org.apache.http.client.HttpClient;
-import org.apache.http.client.methods.HttpGet;
-import org.apache.http.impl.client.DefaultHttpClient;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
+import java.sql.SQLException;
 
-import iia.com.qcmapp.MainActivity;
+import iia.com.qcmapp.R;
 import iia.com.qcmapp.WelcomeActivity;
 import iia.com.qcmapp.crud.QcmDataSource;
 import iia.com.qcmapp.entity.Qcm;
+import iia.com.qcmapp.webservice.WebService;
 
 /**
  * Created by kevin-pc on 31/01/2016.
@@ -33,7 +23,7 @@ public class BackTask extends AsyncTask<Void, Integer, Void> {
 
     private Context context;
 
-    private static final String URL_QCM = "http://192.168.216.12/app_dev.php/api/all/qcm";
+    private static final String URL_QCM = "http://192.168.1.14/app_dev.php/api/all/qcm";
 
     private static final String TAG_QCM = "qcm";
     private static final String TAG_ID = "id";
@@ -42,35 +32,7 @@ public class BackTask extends AsyncTask<Void, Integer, Void> {
     private static final String TAG_DATEEND = "dateEnd";
     private static final String TAG_ISACTIVE = "isActive";
 
-    static JSONObject jObj = null;
-
-    public String readQcm() {
-        StringBuilder builder = new StringBuilder();
-        HttpClient client = new DefaultHttpClient();
-        HttpGet httpGet = new HttpGet(URL_QCM);
-        try {
-            HttpResponse response = client.execute(httpGet);
-            StatusLine statusLine = response.getStatusLine();
-            int statusCode = statusLine.getStatusCode();
-            if (statusCode == 200) {
-                HttpEntity entity = response.getEntity();
-                InputStream content = entity.getContent();
-                BufferedReader reader = new BufferedReader(new InputStreamReader(content));
-                String line;
-                while ((line = reader.readLine()) != null) {
-                    builder.append(line + "\n");
-                }
-            } else {
-                // TODO Foreach in database
-                Log.e(MainActivity.class.toString(), "Failed to download file");
-            }
-        } catch (ClientProtocolException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        return builder.toString();
-    }
+    //static JSONObject jObj = null;
 
     public BackTask(Context context) {
 
@@ -80,14 +42,21 @@ public class BackTask extends AsyncTask<Void, Integer, Void> {
     @Override
     protected void onPreExecute() {
         super.onPreExecute();
-        Toast.makeText(context, "Début du traitement asynchrone", Toast.LENGTH_SHORT).show();
+        Toast.makeText(context, context.getString(R.string.startasynch), Toast.LENGTH_SHORT).show();
     }
 
     @Override
     protected Void doInBackground(Void... params) {
-        String textQcm = readQcm();
-        JSONObject jsonQcm = parseQcm(textQcm);
-        Boolean result  = recContact(jsonQcm);
+        WebService webService = new WebService();
+        String textQcm = webService.readFlow(URL_QCM);//readQcm();
+        JSONObject jsonQcm = webService.parseFlow(textQcm);//parseQcm(textQcm);
+        try {
+
+            Boolean result  = resQcm(jsonQcm);
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
         return null;
     }
 
@@ -98,22 +67,13 @@ public class BackTask extends AsyncTask<Void, Integer, Void> {
     @Override
     protected void onPostExecute(Void result) {
         ((WelcomeActivity) context).refreshList();
-        Toast.makeText(context, "Le traitement asynchrone est terminé", Toast.LENGTH_SHORT).show();
-
     }
 
-    public JSONObject parseQcm(String qcm){
-        try {
-            jObj = new JSONObject(qcm);
-        } catch (JSONException e) {
-            Log.e("JSON Parser", "Error parsing data " + e.toString());
-        }
-        return jObj;
-    }
-
-    public Boolean recContact(JSONObject jsonContact) {
+    public Boolean resQcm(JSONObject jsonContact) throws SQLException {
         QcmDataSource datasource = new QcmDataSource(context);
         datasource.open();
+
+        boolean action = false;
 
         try {
             JSONArray qcmJson = jsonContact.getJSONArray(TAG_QCM);
@@ -126,19 +86,17 @@ public class BackTask extends AsyncTask<Void, Integer, Void> {
                 String nameQcm = c.getString(TAG_NAMEQCM);
                 String DateStart = c.getString(TAG_DATESTART);
                 String DateEnd = c.getString(TAG_DATEEND);
-                //boolean isActive = c.getString(TAG_ISACTIVE).equals("true");
 
                 qcm = datasource.createQcm(nameQcm,DateStart,DateEnd,true,0,id);
             }
             datasource.close();
-            return true;
+            action = true;
 
         } catch (JSONException e) {
             e.printStackTrace();
             datasource.close();
-            return false;
         }
-
+        return action;
     }
 }
 

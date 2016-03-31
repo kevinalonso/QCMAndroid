@@ -12,6 +12,7 @@ import java.util.List;
 
 import iia.com.qcmapp.adapter.QcmListAdapter;
 import iia.com.qcmapp.backtask.BackTask;
+import iia.com.qcmapp.backtask.BadAnswerBackTask;
 import iia.com.qcmapp.backtask.GoodnswerBackTask;
 import iia.com.qcmapp.backtask.QuestionBackTask;
 import iia.com.qcmapp.crud.QcmDataSource;
@@ -38,6 +39,9 @@ public class WelcomeActivity extends Activity {
         GoodnswerBackTask goodnswerBackTask = new GoodnswerBackTask(this);
         goodnswerBackTask.execute();
 
+        BadAnswerBackTask badAnswerBackTask = new BadAnswerBackTask(this);
+        badAnswerBackTask.execute();
+
         //refreshList();
     }
 
@@ -57,6 +61,7 @@ public class WelcomeActivity extends Activity {
 
                 long itemID = resQcm.get(position).getId();
                 Intent intent = new Intent(WelcomeActivity.this, QuestionActivity.class);
+                long seed = System.nanoTime();
                 intent.putExtra("id", itemID);
                 startActivity(intent);
 
@@ -65,7 +70,7 @@ public class WelcomeActivity extends Activity {
 
     }
 
-    public List<Qcm> recupQcm() {
+    public List<Qcm> recupQcm(){
         datasource = new QcmDataSource(this);
         datasource.open();
 

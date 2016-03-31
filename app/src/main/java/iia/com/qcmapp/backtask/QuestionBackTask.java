@@ -32,7 +32,7 @@ public class QuestionBackTask extends AsyncTask<Void, Integer, Void> {
 
     private Context context;
 
-    private static final String URL_QUESTION = "http://192.168.216.12/app_dev.php/api/all/question";
+    private static final String URL_QUESTION = "http://192.168.1.14/app_dev.php/api/all/question";
 
     private static final String TAG_QUESTION = "questions";
     private static final String TAG_ID = "idQuestion";
@@ -109,6 +109,7 @@ public class QuestionBackTask extends AsyncTask<Void, Integer, Void> {
     public Boolean recQuestion(JSONObject jsonContact) {
         QuestionDataSource datasource = new QuestionDataSource(context);
         datasource.open();
+        boolean action = false;
 
         try {
             JSONArray qcmJson = jsonContact.getJSONArray(TAG_QUESTION);
@@ -125,12 +126,12 @@ public class QuestionBackTask extends AsyncTask<Void, Integer, Void> {
                 question = datasource.createQuestion(textQuestion,id,idQcm);
             }
             datasource.close();
-            return true;
+            action = true;
 
         } catch (JSONException e) {
             e.printStackTrace();
             datasource.close();
-            return false;
         }
+        return action;
     }
 }

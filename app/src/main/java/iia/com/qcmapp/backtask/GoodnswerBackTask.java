@@ -32,7 +32,7 @@ public class GoodnswerBackTask extends AsyncTask<Void, Integer, Void> {
 
     private Context context;
 
-    private static final String URL_GOODANSWER = "http://192.168.216.12/app_dev.php/api/all/good/answer";
+    private static final String URL_GOODANSWER = "http://192.168.1.14/app_dev.php/api/all/good/answer";
 
     private static final String TAG_GOODANSWER = "goodAnswers";
     private static final String TAG_ID = "id";

@@ -12,6 +12,8 @@
 
     <!--activity welcome-->
     <string name="valuser">Bienvenue </string>
+    <string name="startasynch">Début du traitement des données</string>
+    <string name="endasynch">Fin du traitement des données </string>
     <!--welcome activity-->
 
     <!--activity question-->
