@@ -93,7 +93,7 @@ public class GoodnswerBackTask extends AsyncTask<Void, Integer, Void> {
     @Override
     protected void onPostExecute(Void result) {
         //((WelcomeActivity) context).refreshList();
-        Toast.makeText(context, "Le traitement asynchrone est terminé", Toast.LENGTH_SHORT).show();
+       Toast.makeText(context, "Le traitement asynchrone est terminé", Toast.LENGTH_SHORT).show();
 
     }
 

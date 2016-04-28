@@ -17,11 +17,12 @@
     <!--welcome activity-->
 
     <!--activity question-->
-    <string name="valquestion">De quel couleur et le mot "public" dans visualt studio ?</string>
-    <string name="valbtnnext">></string>
-    <string name="valbtnprev"></string>
-
-    <!-- fragment question -->
+    <string name="infoprevious">Vous ètes à la première question du qcm</string>
     <string name="previous">Prec</string>
     <string name="next">Suiv</string>
+    <string name="sendqcm">Envoyer</string>
+
+    <!-- fragment question -->
+    <string name="infosendqcm">Qcm envoyé</string>
+
 </resources>
