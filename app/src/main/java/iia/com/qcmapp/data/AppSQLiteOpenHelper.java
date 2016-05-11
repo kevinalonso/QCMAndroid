@@ -29,7 +29,9 @@ public class AppSQLiteOpenHelper extends SQLiteOpenHelper {
     public static final String COLUMN_IS_ACTIVE = "IsActive";
     public static final String COLUMN_ID_TYPE = "_id_Type";
 
-
+    /**
+     * To create database
+     */
     private static final String DATABASE_CREATE = "CREATE TABLE " + TABLE_QCM + " (" + COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT,"
                 + COLUMN_NAME_QCM + " TEXT NOT NULL,"
                 + COLUMN_DATE_START + " DATETIME,"

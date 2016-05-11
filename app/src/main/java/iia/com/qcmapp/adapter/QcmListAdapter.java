@@ -13,19 +13,32 @@ import iia.com.qcmapp.R;
 import iia.com.qcmapp.entity.Qcm;
 
 /**
- * Created by kevin-pc on 02/02/2016.
+ * This class is using to completed list
  */
 public class QcmListAdapter extends ArrayAdapter<Qcm> {
 
     private List<Qcm> qcmList;
     private Context context;
 
+    /**
+     *
+     * @param ctx is the context your applicatin
+     * @param resourceId is the selected item
+     * @param qcm element from the list
+     */
     public QcmListAdapter ( Context ctx, int resourceId, List<Qcm> qcm) {
         super( ctx, resourceId, qcm);
         this.qcmList = qcm;
         this.context = ctx;
     }
 
+    /**
+     *
+     * @param position get position elment in list
+     * @param convertView
+     * @param parent
+     * @return elment string to list her is name to diplay in list.
+     */
     public View getView(int position, View convertView, ViewGroup parent) {
         if (convertView == null)
         {

@@ -35,6 +35,12 @@ public class QuestionDataSource {
         dbHelper.close();
     }
 
+    /**
+     * Use to create question in databases if this not exist else check if the column is update
+     * @param id question
+     * @param idQcm id of qcm
+     * @return
+     */
     public Question createQuestion(String textQuestion, long id,long idQcm) {
         Boolean exist = existQuestionWithId(id);
 
@@ -61,6 +67,12 @@ public class QuestionDataSource {
         }
     }
 
+    /**
+     * Use to update qcm in databases
+     * @param id id question
+     * @param question all value for the question
+     * @return
+     */
     public Question updateQuestion(long id, Question question){
         ContentValues values = new ContentValues();
 
@@ -73,6 +85,7 @@ public class QuestionDataSource {
         return getQuestionWithId(question.getId());
     }
 
+
     public void deleteQcm(Question qcm) {
         long id = qcm.getId();
         System.out.println("Contact deleted with id: " + id);
@@ -80,6 +93,10 @@ public class QuestionDataSource {
                 + " = " + id, null);
     }
 
+    /**
+     * Get all question
+     * @return all question in database
+     */
     public List<Question> getAllQuestion() {
         List<Question> questions = new ArrayList<Question>();
 
@@ -97,6 +114,11 @@ public class QuestionDataSource {
         return questions;
     }
 
+    /**
+     * Get one Qcm
+     * @param id id for one qcm
+     * @return the question where id = id_qcm
+     */
     public Question getQuestionWithId(Long id){
         Cursor cursor = database.query(AppSQLiteOpenHelper.TABLE_QUESTION, allColumns, AppSQLiteOpenHelper.COLUMN_ID_QCM + " = \"" + id +"\"", null, null, null, null);
         cursor.moveToFirst();
@@ -105,6 +127,11 @@ public class QuestionDataSource {
         return question;
     }
 
+    /**
+     * Get one Qcm
+     * @param id id for one qcm
+     * @return list question where id = id_qcm
+     */
     public List<Question> getQuestionWithIdList(Long id){
         List<Question> questionList = new ArrayList<Question>();
         Cursor cursor = database.query(AppSQLiteOpenHelper.TABLE_QUESTION, allColumns, AppSQLiteOpenHelper.COLUMN_ID_QCM + " = \"" + id + "\"", null, null, null, null);
@@ -118,6 +145,11 @@ public class QuestionDataSource {
         return questionList;
     }
 
+    /**
+     * Get if Question exist
+     * @param id of question
+     * @return if question exist in databases
+     */
     public Boolean existQuestionWithId(Long id){
         Cursor c = database.query(AppSQLiteOpenHelper.TABLE_QUESTION, allColumns, AppSQLiteOpenHelper.COLUMN_ID_QUESTION + " = \"" + id +"\"", null, null, null, null);
         if(c.getCount()>0){
@@ -130,6 +162,11 @@ public class QuestionDataSource {
         }
     }
 
+    /**
+     * Return Question
+     * @param cursor result comlumn from databases
+     * @return entity question completed
+     */
     private Question cursorToQuestion(Cursor cursor) {
         Question question = new Question();
         question.setId(cursor.getLong(0));

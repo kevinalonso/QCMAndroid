@@ -14,12 +14,12 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         /**
-         * My element graphc
+         * My element graphic
          */
         Button btnConn = (Button)findViewById(R.id.btnconnction);
 
         /**
-         * Method to asyncTask
+         * Go to the welcome page
          */
         btnConn.setOnClickListener(new View.OnClickListener() {
             @Override

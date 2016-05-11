@@ -21,7 +21,9 @@ public class QcmDataSource {
     // Database fields
     private SQLiteDatabase database;
     private AppSQLiteOpenHelper dbHelper;
-
+    /**
+     * Get data in the column databases
+     */
     private String[] allColumns = { AppSQLiteOpenHelper.COLUMN_ID,
             AppSQLiteOpenHelper.COLUMN_NAME_QCM,
             AppSQLiteOpenHelper.COLUMN_DATE_START,
@@ -29,18 +31,39 @@ public class QcmDataSource {
             //QcmSQLiteOpenHelper.COLUMN_IS_ACTIVE,
             AppSQLiteOpenHelper.COLUMN_ID_TYPE};
 
+    /**
+     * Get table and column database
+     * @param context of application
+     */
     public QcmDataSource(Context context) {
         dbHelper = new AppSQLiteOpenHelper(context);
     }
 
+    /**
+     * Open connection in databases
+     * @throws SQLException
+     */
     public void open() throws SQLException {
         database = dbHelper.getWritableDatabase();
     }
 
+    /**
+     * Close connection in databases
+     */
     public void close() {
         dbHelper.close();
     }
 
+    /**
+     * Use to create qcm in databases if this not exist else check if the column is updated
+     * @param nameQcm name qcm
+     * @param dateStart date strat qcm
+     * @param dateEnd date end qcm
+     * @param isActive if qcm is active
+     * @param idType category of qcm
+     * @param idQcm id of qcm
+     * @return
+     */
     public Qcm createQcm(String nameQcm, String dateStart, String dateEnd, boolean isActive, int idType, long idQcm) {
         Boolean exist = existQcmWithId(idQcm);
 
@@ -69,6 +92,12 @@ public class QcmDataSource {
         }
     }
 
+    /**
+     * Use to update qcm in databases
+     * @param id id qcm
+     * @param qcm all value for the qcm
+     * @return
+     */
     public Qcm updateQcm(long id, Qcm qcm){
         ContentValues values = new ContentValues();
 
@@ -83,6 +112,10 @@ public class QcmDataSource {
         return getQcmWithId(qcm.getId());
     }
 
+    /**
+     * Delete a qcm in databases
+     * @param qcm value for delete qcm in databases
+     */
     public void deleteQcm(Qcm qcm) {
         long id = qcm.getId();
         System.out.println("Contact deleted with id: " + id);
@@ -90,6 +123,10 @@ public class QcmDataSource {
                 + " = " + id, null);
     }
 
+    /**
+     * Get all qcm
+     * @return all qcm in database
+     */
     public List<Qcm> getAllQcm() {
         List<Qcm> contacts = new ArrayList<Qcm>();
 
@@ -107,6 +144,11 @@ public class QcmDataSource {
         return contacts;
     }
 
+    /**
+     * Get one Qcm
+     * @param id id for one qcm
+     * @return the qcm where id = id_qcm
+     */
     public Qcm getQcmWithId(Long id){
         Cursor c = database.query(AppSQLiteOpenHelper.TABLE_QCM, allColumns, AppSQLiteOpenHelper.COLUMN_ID + " = \"" + id +"\"", null, null, null, null);
         c.moveToFirst();
@@ -115,6 +157,11 @@ public class QcmDataSource {
         return contact;
     }
 
+    /**
+     * Get if Qcm exist
+     * @param id of qcm
+     * @return if qcm exist in databases
+     */
     public Boolean existQcmWithId(Long id){
         Cursor c = database.query(AppSQLiteOpenHelper.TABLE_QCM, allColumns, AppSQLiteOpenHelper.COLUMN_ID + " = \"" + id +"\"", null, null, null, null);
         if(c.getCount()>0){
@@ -127,6 +174,11 @@ public class QcmDataSource {
         }
     }
 
+    /**
+     * Return Qcm
+     * @param cursor result comlumn from databases
+     * @return entity qcm completed
+     */
     private Qcm cursorToQcm(Cursor cursor) {
         Qcm qcm = new Qcm();
         qcm.setId(cursor.getLong(0));

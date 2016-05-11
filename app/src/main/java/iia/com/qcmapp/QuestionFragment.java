@@ -11,7 +11,6 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -97,10 +96,10 @@ public class QuestionFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
+
         View v = inflater.inflate(R.layout.fragment_question, container, false);
 
-        //Variable
+        //Fields
         Button btnSend = (Button)v.findViewById(R.id.btnSend);
         TextView questionTextView = (TextView)v.findViewById(R.id.textViewQuestion);
         answerText = (CheckBox)v.findViewById(R.id.chkAnswer2);
@@ -114,29 +113,27 @@ public class QuestionFragment extends Fragment {
         GoodAnswerDataSource goodAnswerDataSource = new GoodAnswerDataSource(getActivity());
         BadAnswerDataSource badAnswerDataSource = new BadAnswerDataSource(getActivity());
 
-        //Very important always open connection database to execute query
+        //Open connection database
         questionDataSource.open();
 
         List<Question> questionList = new ArrayList<Question>();
 
         questionList = questionDataSource.getQuestionWithIdList(resIntent);
 
-        //Insert element in random order in my list
-        //Collections.shuffle(questionList);
-
-        //Very important always open connection database to execute query
         goodAnswerDataSource.open();
         badAnswerDataSource.open();
 
         if(POINTOR_I == questionList.size()){
+            //Visibl  = true to the button to send data
             btnSend.setVisibility(View.VISIBLE);
+            //Replace text in view to display "end qcm"
             questionTextView.setText("");
             questionTextView.setText(Constants.END_QCM);
 
-            //Call method in Question Activity to add answer to the Webservice
-            //when the user click on "sen button"
-
         }else {
+            /**
+             * Get question in graphic elment
+             */
             questionTextView.setText(questionList.get(POINTOR_I).getTextQuestion());
             idQuestion = questionList.get(POINTOR_I).getId();
             answerText.setText(goodAnswerDataSource.getGoodAnswerWithId(idQuestion).getAnswerQuestion());
@@ -144,6 +141,9 @@ public class QuestionFragment extends Fragment {
             List<BadAnswer> badAnswerlist = new ArrayList<BadAnswer>();
             badAnswerlist = badAnswerDataSource.getBadAnswerWithIdList(idQuestion);
 
+            /**
+             * Get answer bad or good in graphic element
+             */
            for(int index = 0; index <badAnswerlist.size(); index++)
            {
                badAnswerOne.setText(badAnswerlist.get(0).getBadAnswerQuestion());
@@ -152,7 +152,6 @@ public class QuestionFragment extends Fragment {
                badAnswerTwo.setText(badAnswerlist.get(1).getBadAnswerQuestion());
                index++;
            }
-            //badAnswerTwo.setText(badAnswerDataSource.getBadAnswerWithId(idQuestion).getBadAnswerQuestion());
            //Close connection databases after execute query
             badAnswerDataSource.close();
             goodAnswerDataSource.close();
@@ -161,7 +160,9 @@ public class QuestionFragment extends Fragment {
         btnSend.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //TODO Post list of result answer
+                /**
+                 * Button to post data from addAnswerToWebService() in QuestionActivity
+                 */
                 QuestionActivity questionActivity = new QuestionActivity();
                 questionActivity.addAnswerToWebService();
             }
@@ -169,22 +170,33 @@ public class QuestionFragment extends Fragment {
         return  v;
     }
 
+    /**
+     * Get answer selected by the user
+     * @return userAnswer
+     */
     public UserAnswer getAnswerUser(){
         UserAnswer userAnswer = new UserAnswer();
-        int res = 0;
+
         if(answerText.isChecked()) {
-            Toast.makeText(getActivity(),"Good checked",Toast.LENGTH_LONG).show();
+            userAnswer.setIdAnswer(answerText.getId());
+            /*userAnswer.setIdQuestion((int) idQuestion);
+            userAnswer.setIdQcm((int)resIntent);*/
         }
         if(badAnswerOne.isChecked()){
             userAnswer.setIdAnswer(badAnswerOne.getId());
-            userAnswer.setIdQuestion((int) idQuestion);
-            userAnswer.setIdQcm((int)resIntent);
+            /*userAnswer.setIdQuestion((int) idQuestion);
+            userAnswer.setIdQcm((int)resIntent);*/
         }
         if(badAnswerTwo.isChecked()){
-            Toast.makeText(getActivity(),"Good checked",Toast.LENGTH_LONG).show();
+            userAnswer.setIdAnswer(badAnswerTwo.getId());
+            /*userAnswer.setIdQuestion((int) idQuestion);
+            userAnswer.setIdQcm((int)resIntent);*/
         }
+        userAnswer.setIdQuestion((int) idQuestion);
+        userAnswer.setIdQcm((int)resIntent);
         return userAnswer;
     }
+
 
     //region TODO: Rename method, update argument and hook method into UI event
     public void onButtonPressed(Uri uri) {

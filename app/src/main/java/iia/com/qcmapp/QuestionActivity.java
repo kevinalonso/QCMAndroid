@@ -27,17 +27,15 @@ public class QuestionActivity extends AppCompatActivity implements QuestionFragm
         setContentView(R.layout.activity_question);
 
         userAnswers = new ArrayList<UserAnswer>();
-        //QuestionDataSource questionDataSource = new QuestionDataSource(getApplicationContext());
-        //questionDataSource.open();
-
-        //questionList = questionDataSource.getQuestionWithIdList(QuestionFragment.ID_QCM_FROM_LIST);
-        //Collections.shuffle(questionList);
 
         Button btnNext = (Button)findViewById(R.id.buttonNext);
         Button btnPrev = (Button)findViewById(R.id.buttonPrev);
 
 
         //region BUTTON NEXT
+        /**
+         * Go to the next element in list of question
+         */
         btnNext.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -69,6 +67,9 @@ public class QuestionActivity extends AppCompatActivity implements QuestionFragm
         //endregion
 
         //region BUTTON PREVIOUS
+        /**
+         * Go to the previous element in list of question
+         */
         btnPrev.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -88,16 +89,15 @@ public class QuestionActivity extends AppCompatActivity implements QuestionFragm
         //endregion
     }
 
+    /**
+     * Post data to the database from the webservice
+     */
     public void addAnswerToWebService(){
         PostWebService postWebService = new PostWebService();
         //postWebService.postData(Constants.resList);
         postWebService.postList = new ArrayList<UserAnswer>();
         postWebService.postList = Constants.resList;
         postWebService.execute();
-        //Toast.makeText(this,R.string.infosendqcm,Toast.LENGTH_LONG).show();
-
-        /*Intent intent = new Intent(QuestionActivity.this, WelcomeActivity.class);
-        startActivity(intent);*/
 
     }
 

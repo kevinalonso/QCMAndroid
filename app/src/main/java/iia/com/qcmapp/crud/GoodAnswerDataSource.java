@@ -35,6 +35,12 @@ public class GoodAnswerDataSource {
         dbHelper.close();
     }
 
+    /**
+     * Use to create goodAnswer in databases if this not exist else check if the column is update
+     * @param id question
+     * @param idQuestion id of qcm
+     * @return
+     */
     public GoodAnswer createGoodAnwser(String textAnswer, long id,long idQuestion) {
         Boolean exist = existGoodAnswerWithId(id);
 
@@ -60,6 +66,12 @@ public class GoodAnswerDataSource {
         }
     }
 
+    /**
+     * Use to update goodAnswer in databases
+     * @param id id goodAnswer
+     * @param goodAnswer all value for the question
+     * @return
+     */
     public GoodAnswer updateGoodAnswer(long id, GoodAnswer goodAnswer){
         ContentValues values = new ContentValues();
 
@@ -78,6 +90,10 @@ public class GoodAnswerDataSource {
                 + " = " + id, null);
     }
 
+    /**
+     * Get all goodAnswer
+     * @return all goodAnswer in database
+     */
     public List<GoodAnswer> getAllGoodAnswer() {
         List<GoodAnswer> goodAnswers = new ArrayList<GoodAnswer>();
 
@@ -94,7 +110,11 @@ public class GoodAnswerDataSource {
         cursor.close();
         return goodAnswers;
     }
-
+    /**
+     * Get one goodAnswer
+     * @param id id for one goodAnswer
+     * @return the goodAnswer where id = id_question
+     */
     public GoodAnswer getGoodAnswerWithId(Long id){
         Cursor cursor = database.query(AppSQLiteOpenHelper.TABLE_ANSWER, allColumns, AppSQLiteOpenHelper.COLUMN_ID_QUESTION_FK + " = \"" + id +"\"", null, null, null, null);
         cursor.moveToFirst();
@@ -102,6 +122,7 @@ public class GoodAnswerDataSource {
         cursor.close();
         return goodAnswer;
     }
+
 
     public List<GoodAnswer> getGoodAnswerWithIdList(Long id){
         List<GoodAnswer> goodAnswerList = new ArrayList<GoodAnswer>();
@@ -116,6 +137,11 @@ public class GoodAnswerDataSource {
         return goodAnswerList;
     }
 
+    /**
+     * Get if goodAnswer exist
+     * @param id of goodAnswer
+     * @return if goodAnswer exist in databases
+     */
     public Boolean existGoodAnswerWithId(Long id){
         Cursor c = database.query(AppSQLiteOpenHelper.TABLE_ANSWER, allColumns, AppSQLiteOpenHelper.COLUMN_ID_ANSWER + " = \"" + id +"\"", null, null, null, null);
         if(c.getCount()>0){
@@ -128,6 +154,11 @@ public class GoodAnswerDataSource {
         }
     }
 
+    /**
+     * Return goodAnswer
+     * @param cursor result comlumn from databases
+     * @return entity goodAnswer completed
+     */
     private GoodAnswer cursorToGoodAnswer(Cursor cursor) {
         GoodAnswer goodAnswer = new GoodAnswer();
         goodAnswer.setId(cursor.getLong(0));

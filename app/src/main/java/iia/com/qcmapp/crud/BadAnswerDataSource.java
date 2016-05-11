@@ -35,6 +35,12 @@ public class BadAnswerDataSource {
         dbHelper.close();
     }
 
+    /**
+     * Use to create badAnswer in databases if this not exist else check if the column is update
+     * @param id badAnswer
+     * @param idQuestion id of question
+     * @return
+     */
     public BadAnswer createBadAnwser(String textAnswer, long id,long idQuestion) {
         Boolean exist = existBadAnswerWithId(id);
 
@@ -60,6 +66,12 @@ public class BadAnswerDataSource {
         }
     }
 
+    /**
+     * Use to update badAnswer in databases
+     * @param id id badAnswer
+     * @param badAnswer all value for the badAnswer
+     * @return
+     */
     public BadAnswer updateBadAnswer(long id, BadAnswer badAnswer){
         ContentValues values = new ContentValues();
 
@@ -95,6 +107,11 @@ public class BadAnswerDataSource {
         return goodAnswers;
     }
 
+    /**
+     * Get one badAnswer
+     * @param id id for one goodAnswer
+     * @return the badAnswer where id = id_badAnswer
+     */
     public BadAnswer getBadAnswerWithId(Long id){
         Cursor cursor = database.query(AppSQLiteOpenHelper.TABLE_BAD_ANSWER, allColumns, AppSQLiteOpenHelper.COLUMN_ID_BAD_ANSWER + " = \"" + id +"\"", null, null, null, null);
         cursor.moveToFirst();
@@ -103,6 +120,11 @@ public class BadAnswerDataSource {
         return badAnswer;
     }
 
+    /**
+     * Get Bad Answer from question in database
+     * @param id question
+     * @return the badAnswer where id = id_question
+     */
     public List<BadAnswer> getBadAnswerWithIdList(Long id){
         List<BadAnswer> badAnswerList = new ArrayList<BadAnswer>();
         Cursor cursor = database.query(AppSQLiteOpenHelper.TABLE_BAD_ANSWER, allColumns, AppSQLiteOpenHelper.COLUMN_BAD_ID_QUESTION_FK + " = \"" + id + "\"", null, null, null, null);
@@ -115,7 +137,11 @@ public class BadAnswerDataSource {
         cursor.close();
         return badAnswerList;
     }
-
+    /**
+     * Get if badAnswer exist
+     * @param id of badAnswer
+     * @return if badAnswer exist in databases
+     */
     public Boolean existBadAnswerWithId(Long id){
         Cursor c = database.query(AppSQLiteOpenHelper.TABLE_BAD_ANSWER, allColumns, AppSQLiteOpenHelper.COLUMN_ID_BAD_ANSWER + " = \"" + id +"\"", null, null, null, null);
         if(c.getCount()>0){
@@ -128,6 +154,11 @@ public class BadAnswerDataSource {
         }
     }
 
+    /**
+     * Return badAnswer
+     * @param cursor result comlumn from databases
+     * @return entity badAnswer completed
+     */
     private BadAnswer cursorToBadAnswer(Cursor cursor) {
         BadAnswer badAnswer = new BadAnswer();
         badAnswer.setId(cursor.getLong(0));

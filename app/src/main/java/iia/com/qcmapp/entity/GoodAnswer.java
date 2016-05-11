@@ -9,7 +9,7 @@ public class GoodAnswer {
      */
     private long id;
     /**
-     * answer for a question
+     * answer text
      */
     private String answerQuestion;
     /**
@@ -20,7 +20,7 @@ public class GoodAnswer {
     //region GETTER & SETTER
 
     /**
-     *
+     * get text GoodAnswer
      * @return
      */
     public String getAnswerQuestion() {
@@ -28,7 +28,7 @@ public class GoodAnswer {
     }
 
     /**
-     *
+     * set text GoodAnswer
      * @param answerQuestion
      */
     public void setAnswerQuestion(String answerQuestion) {
@@ -36,7 +36,7 @@ public class GoodAnswer {
     }
 
     /**
-     *
+     * get id GoodAnswer
      * @return
      */
     public long getId() {
@@ -44,7 +44,7 @@ public class GoodAnswer {
     }
 
     /**
-     *
+     * set id GoodAnswer
      * @param id
      */
     public void setId(long id) {
@@ -52,7 +52,7 @@ public class GoodAnswer {
     }
 
     /**
-     *
+     * get idQuestion
      * @return
      */
     public long getIdQuestion() {
@@ -60,7 +60,7 @@ public class GoodAnswer {
     }
 
     /**
-     *
+     * set idQuestion
      * @param idQuestion
      */
     public void setIdQuestion(long idQuestion) {

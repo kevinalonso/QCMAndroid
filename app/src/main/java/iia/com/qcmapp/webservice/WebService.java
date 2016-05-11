@@ -26,6 +26,11 @@ public class WebService {
 
     static JSONObject jObj = null;
 
+    /**
+     * Connect to the webservice
+     * @param url to access on my jsn fux from the webservice
+     * @return
+     */
     public String readFlow(String url) {
         StringBuilder builder = new StringBuilder();
         HttpClient client = new DefaultHttpClient();
@@ -54,6 +59,11 @@ public class WebService {
         return builder.toString();
     }
 
+    /**
+     *
+     * @param flow elment in the json flow exemple: '{'login':'toto', 'password':'toto'}
+     * @return json object
+     */
     public JSONObject parseFlow(String flow){
         try {
             jObj = new JSONObject(flow);

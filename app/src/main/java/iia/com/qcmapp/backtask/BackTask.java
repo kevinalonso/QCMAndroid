@@ -46,6 +46,9 @@ public class BackTask extends AsyncTask<Void, Integer, Void> {
     }
 
     @Override
+    /**
+     * Call the web service to get data into json flow
+     */
     protected Void doInBackground(Void... params) {
         WebService webService = new WebService();
         String textQcm = webService.readFlow(URL_QCM);//readQcm();
@@ -65,10 +68,19 @@ public class BackTask extends AsyncTask<Void, Integer, Void> {
     }
 
     @Override
+    /**
+     * refresh list in WelcomeActivity
+     */
     protected void onPostExecute(Void result) {
         ((WelcomeActivity) context).refreshList();
     }
 
+    /**
+     * Check if the data from json exist in databases else adding in databases
+     * @param jsonContact json from webservice
+     * @return if the qcm exist in database
+     * @throws SQLException
+     */
     public Boolean resQcm(JSONObject jsonContact) throws SQLException {
         QcmDataSource datasource = new QcmDataSource(context);
         datasource.open();

@@ -30,15 +30,27 @@ public class WelcomeActivity extends Activity {
 
          lv = (ListView)findViewById(R.id.listQcm);
 
+        /**
+         * Get the Qcm from the webservice
+         */
         BackTask backtask = new BackTask(this);
         backtask.execute();
 
+        /**
+         * Get the Question from the webservice
+         */
         QuestionBackTask questionBackTask = new QuestionBackTask(this);
         questionBackTask.execute();
 
+        /**
+         * Get the GoodAnswer from the webservice
+         */
         GoodnswerBackTask goodnswerBackTask = new GoodnswerBackTask(this);
         goodnswerBackTask.execute();
 
+        /**
+         * Get the BadAnswer from the webservice
+         */
         BadAnswerBackTask badAnswerBackTask = new BadAnswerBackTask(this);
         badAnswerBackTask.execute();
 
