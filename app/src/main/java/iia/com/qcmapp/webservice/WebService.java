@@ -49,7 +49,8 @@ public class WebService {
                 }
             } else {
                 // TODO Foreach in database
-                Log.e(MainActivity.class.toString(), "Failed to download file");
+                Log.e(MainActivity.class.toString(), "Not Connected");
+
             }
         } catch (ClientProtocolException e) {
             e.printStackTrace();

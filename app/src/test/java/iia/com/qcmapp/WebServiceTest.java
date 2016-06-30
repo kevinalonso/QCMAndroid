@@ -1,12 +1,19 @@
 package iia.com.qcmapp;
 
+
+import android.content.Context;
+import android.test.mock.MockContext;
+
 import com.loopj.android.http.HttpGet;
 
 import org.junit.Test;
 
+import java.util.concurrent.ExecutionException;
+
 import cz.msebera.android.httpclient.HttpResponse;
 import cz.msebera.android.httpclient.client.HttpClient;
 import cz.msebera.android.httpclient.impl.client.HttpClientBuilder;
+import iia.com.qcmapp.backtask.UserBackTask;
 
 import static org.junit.Assert.assertEquals;
 
@@ -15,6 +22,7 @@ import static org.junit.Assert.assertEquals;
  */
 public class WebServiceTest {
 
+    public String HTTP_URL = "http://192.168.100.169";
     /**
      * Code 200 http
      */
@@ -35,9 +43,24 @@ public class WebServiceTest {
      * @throws Exception
      */
     @Test
+    public void myWebService() throws  Error {
+        Context ctx;
+        ctx = new MockContext();
+        UserBackTask userBackTask = new UserBackTask(ctx);
+        try {
+            userBackTask.execute().get();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        }
+
+    }
+
+    @Test
     public void webServiceQcm() throws Exception {
 
-        String url = "http://192.168.1.14/app_dev.php/api/all/qcm";
+        String url = HTTP_URL+"/app_dev.php/api/all/qcm";
 
         assertEquals(CODE_200, this.getResponse(url).getStatusLine().toString());
     }
@@ -48,7 +71,7 @@ public class WebServiceTest {
     @Test
     public void webServiceQcmId() throws Exception {
 
-        String url = "http://192.168.1.14/app_dev.php/api/qcms/1";
+        String url = HTTP_URL+"/app_dev.php/api/qcms/1";
 
         assertEquals(CODE_200, this.getResponse(url).getStatusLine().toString());
     }
@@ -58,7 +81,7 @@ public class WebServiceTest {
      */
     @Test
     public void webServiceQuestion() throws Exception {
-        String url = "http://192.168.1.14/app_dev.php/api/all/question";
+        String url = HTTP_URL+"/app_dev.php/api/all/question";
 
         assertEquals(CODE_200, this.getResponse(url).getStatusLine().toString());
     }
@@ -69,7 +92,7 @@ public class WebServiceTest {
      */
     @Test
     public void webServiceGoodAnswer() throws Exception {
-        String url = "http://192.168.1.14/app_dev.php/api/all/good/answer";
+        String url = HTTP_URL+"/app_dev.php/api/all/good/answer";
 
         assertEquals(CODE_200, this.getResponse(url).getStatusLine().toString());
     }
@@ -80,7 +103,7 @@ public class WebServiceTest {
      */
     @Test
     public void webServiceBadAnswer() throws Exception {
-        String url = "http://192.168.1.14/app_dev.php/api/all/bad/answer";
+        String url = HTTP_URL+"/app_dev.php/api/all/bad/answer";
 
         assertEquals(CODE_200, this.getResponse(url).getStatusLine().toString());
     }

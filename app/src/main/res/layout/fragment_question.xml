@@ -67,6 +67,6 @@
             android:layout_gravity="bottom"
             android:textColor="@android:color/white"
             android:background="@android:color/holo_green_dark"
-            android:visibility="invisible"/>
+            android:visibility="visible"/>
     </LinearLayout>
 </FrameLayout>

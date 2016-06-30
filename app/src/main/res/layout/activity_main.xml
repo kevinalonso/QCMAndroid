@@ -61,6 +61,7 @@
                 android:id="@+id/edtpwd"
                 android:layout_alignBottom="@+id/linearLayout"
                 android:layout_marginTop="57dp"
+                android:inputType="textPassword"
                 android:layout_alignParentEnd="true" />
 
 

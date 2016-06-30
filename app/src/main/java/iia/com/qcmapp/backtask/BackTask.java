@@ -25,7 +25,7 @@ public class BackTask extends AsyncTask<Void, Integer, Void> {
 
     private static final String URL_QCM = "http://192.168.1.14/app_dev.php/api/all/qcm";
 
-    private static final String TAG_QCM = "qcm";
+    private static final String TAG_QCM = "qcms";
     private static final String TAG_ID = "id";
     private static final String TAG_NAMEQCM = "nameQcm";
     private static final String TAG_DATESTART = "dateStart";

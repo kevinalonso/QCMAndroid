@@ -8,6 +8,8 @@
     <string name="vallog">Login</string>
     <string name="valpwd">Mot de passe</string>
     <string name="valconnection">Connexion</string>
+    <string name="notexist">Utilisateur inconnu</string>
+    <string name="emptyloginpass">Veuillez saisir un mot de passe et un login</string>
     <!--activity log-->
 
     <!--activity welcome-->
